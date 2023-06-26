@@ -13,7 +13,7 @@
         <!-- --> 
         <form action="/product" method="POST">   
             <input type="text" placeholder="name" name="name" />        
-            <input type="text" placeholder="quote" name="quote" />
+            <input type="text" placeholder="price" name="quote" />
             <button type="submit">Submit</button>
         </form>
         <!-- -->                               
@@ -27,7 +27,7 @@
                     <!-- Output name from the iterated quote object -->
                     <span><%= quotes[i].name %></span>:
                     <!-- Output quote from the iterated quote object -->
-                    <span><%= quotes[i].quote %></span>
+                    <span><%= quotes[i].quote %></span>$
                 </li>
             <% } %>
         </ul>    
