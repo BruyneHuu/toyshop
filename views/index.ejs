@@ -1,37 +1,117 @@
 <!-- index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Star Wars Quote App</title>
-    </head>
 
-    <body>
-        <h1>Welcome to ATN the largest Vietnam Toy Store</h1>
-        
-        <!-- (1): CREATE Task -->         
-        <!-- --> 
-        <form action="/product" method="POST">   
-            <input type="text" placeholder="name" name="name" />        
-            <input type="text" placeholder="price" name="quote" />
-            <button type="submit">Submit</button>
-        </form>
-        <!-- -->                               
+<head>
+    <meta charset="UTF-8" />
+    <title>Toy Store</title>
+</head>
 
-        <!-- (2) READ Task -->                        
-        <h2> Product: All Toys in Database </h2>
-        <ul class="quotes">
-            <!-- Loop through quotes -->
-            <% for(var i = 0; i < quotes.length; i++) {%>
-                <li class="quote">
-                    <!-- Output name from the iterated quote object -->
-                    <span><%= quotes[i].name %></span>:
-                    <!-- Output quote from the iterated quote object -->
-                    <span><%= quotes[i].quote %></span>$
-                </li>
-            <% } %>
-        </ul>    
-    
-    </body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL li a {
+            border: 1px solid #ddd;
+            margin-top: -1px;
+            /* Prevent double borders */
+            background-color: #f6f6f6;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block
+        }
+
+        #myUL li a:hover:not(.header) {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>Welcome to the Toy Store!</h1>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <% for(var i=0; i < quotes.length; i++) {%>
+        <ul id="myUL">
+            <li><a href="#">
+                    <%= quotes[i].name %>
+                </a></li>
+
+        <% } %>
+
+            <script>
+                function myFunction() {
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("myUL");
+                    li = ul.getElementsByTagName("li");
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+            </script>
+            <br>
+            <form action="/product" method="POST">
+                <input type="text" placeholder="name" name="name" required />
+                <input type="text" placeholder="price" name="price" required />
+                <br>
+                <br>
+                <input type="file" name="image" accept="image/*" style="display: block;">
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <style>
+                li {
+                    list-style: none;
+                }
+            </style>
+            <h2> Product: All Toys in Database </h2>
+            <ul class="quotes">
+                <!-- Loop through quotes -->
+                <% for(var i=0; i < quotes.length; i++) {%>
+                    <li style="display:inline-block " class="quote">
+                        <!-- Output name from the iterated quote object -->
+                        <img style="max-width: 200px;max-height: 200px;display:flex" src="<%= quotes[i].image %>"
+                            alt="Toy Image">
+                        <span style="justify-content: center;">
+                            <%= quotes[i].name %>
+                        </span>:
+                        <!-- Output quote from the iterated quote object -->
+                        <span>
+                            <%= quotes[i].price %>
+                        </span>$
+                    </li>
+                    <% } %>
+            </ul>
+</body>
 
 </html>
